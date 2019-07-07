@@ -3,6 +3,7 @@
 #include <typeinfo>
 #include <cstdlib>
 #include <algorithm>
+#include <cassert>
 #include "gc_details.h"
 #include "gc_iterator.h"
 
