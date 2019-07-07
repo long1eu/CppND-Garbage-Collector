@@ -138,7 +138,7 @@ template<class T, int size>
 bool Pointer<T, size>::Collect() {
   bool deleted = false;
 
-  auto remove_if_ = [&deleted](const PtrDetails<T> &ptr_details) {
+  auto predicate = [&deleted](const PtrDetails<T> &ptr_details) {
     if (ptr_details.ref_count_ == 0) {
       ptr_details.is_array_ ?
       delete[] ptr_details.mem_ptr_ :
@@ -151,7 +151,7 @@ bool Pointer<T, size>::Collect() {
     return false;
   };
 
-  auto start_of_garbage = remove_if(ref_container_.begin(), ref_container_.end(), remove_if_);
+  auto start_of_garbage = std::remove_if(ref_container_.begin(), ref_container_.end(), predicate);
   ref_container_.erase(start_of_garbage, ref_container_.end());
 
   return deleted;
